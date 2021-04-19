@@ -4,10 +4,17 @@
       {{unbound line.text}}
       {{~#if line.needsEllipsis~}}
         <span class="lt-line-clamp__ellipsis">{{unbound ellipsis}}
+          {{#if textSuffix}}
+						&nbsp;<span class="lt-line-clamp__suffix">{{textSuffix}}</span>
+					{{/if}}
           {{#if _showMoreButton}}
             <a data-test-line-clamp-show-more-button="true" href="#" role="button" id="line-clamp-show-more-button" aria-expanded="false" class="lt-line-clamp__more" onclick={{action "toggleTruncate"}}>{{unbound seeMoreText}}</a>
           {{/if}}
         </span>
+      {{else}}
+				{{#if textSuffix}}
+          &nbsp;<span class="lt-line-clamp__suffix">{{textSuffix}}</span>
+        {{/if}}
       {{~/if~}}
     </span>
   {{else if line.newLine}}
