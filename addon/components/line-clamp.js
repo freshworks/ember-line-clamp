@@ -534,8 +534,6 @@ export default Component.extend({
 		const textSuffixWidth = this._measureWidth(this.textSuffix);
 		const textSuffixLength = this.textSuffix.length;
 
-		debugger;
-
     for (let line = 1; line <= numLines; line += 1) {
       const textWords = textLines[0];
 
