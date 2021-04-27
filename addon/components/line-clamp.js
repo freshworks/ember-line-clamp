@@ -61,6 +61,7 @@ const HTML_ENTITIES_TO_CHARS = {
  * @param {Action}  onCollapse Action triggered when text is collapsed
  * @param {Boolean} useJsOnly @default false Disables native CSS solution
  * @param {Action}  handleTruncate @returns {boolean} didTruncate Action triggered every time text goes true truncation process. Only called when native CSS solution isn't used. If didTruncate is true, text truncated and ellipsis applied.
+ * @param {Boolean} forceEvaluate @default false Force evaluate the line clamp based on some condition
  *
  * @example
  * ```
@@ -164,14 +165,20 @@ export default Component.extend({
    */
 	seeLessText: 'See Less',
 
-
 	/**
 	 * Text suffix to append after the truncation
 	 * @type {String}
 	 * @default ""
 	 * @example: "Some sample content that is truncated now...continue"
 	 */
-	textSuffix: "",
+  textSuffix: "",
+
+  /**
+	 * Force evaluate the line clamp ?
+	 * @type {Boolean}
+	 * @default false
+	 */
+	forceEvaluate: false,
 
   /**
    * Based on showMoreButton and interactive flags
@@ -287,6 +294,12 @@ export default Component.extend({
       this._handleNewTruncateAttr(this.get('truncate'));
       this.set('_oldTruncate', this.get('truncate'));
     }
+
+    // For cases where the clamping has to be forced dynamically
+		// ex: parent container resizing, etc.,
+		if (this.get('forceEvaluate')) {
+			this.onResize();
+		}
   },
 
   didInsertElement() {
